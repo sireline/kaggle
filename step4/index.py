@@ -4,6 +4,13 @@ from flask import redirect
 from flask import render_template
 
 from DataStore.MySQL import MySQL
+dns = {
+    'user': 'mysql',
+    'host': 'localhost',
+    'password': 'NewPassword',
+    'database': 'kaggle'
+}
+db = MySQL(**dns)
 
 app = Flask(__name__)
 
@@ -22,34 +29,17 @@ def hello():
 @app.route('/users')
 def users():
     props = {'title': 'Users List', 'msg': 'Users List'}
-    dns = {
-        'user': 'mysql',
-        'host': 'localhost',
-        'database': 'kaggle'
-    }
-    db = MySQL()
-    db.open(**dns)
-    sql = 'SELECT * FROM users'
-    users = db.query(sql)
-    db.close()
-    html = render_template('users.html', props=props,users=users)
+    stmt = 'SELECT * FROM users'
+    users = db.query(stmt)
+    html = render_template('users.html', props=props, users=users)
     return html
 
-@app.route('/users/<id>')
+@app.route('/users/<int:id>')
 def user(id):
-    props = {'title': 'User Infomation', 'msg': 'User Infomation'}
-    dns = {
-        'user': 'mysql',
-        'host': 'localhost',
-        'database': 'kaggle'
-    }
-    db = MySQL()
-    db.open(**dns)
-    sql = 'SELECT * FROM users WHERE id = ?'
-    data = db.query(sql, id, prepared=True)
-    user = [bary.decode('utf-8') if isinstance(bary, bytearray) else bary for bary in data[0]]
-    db.close()
-    html = render_template('user.html', props=props,user=user)
+    props = {'title': 'User Information', 'msg': 'User Information'}
+    stmt = 'SELECT * FROM users WHERE id = ?'
+    user = db.query(stmt, id, prepared=True)
+    html = render_template('user.html', props=props,user=user[0])
     return html
 
 @app.errorhandler(404)

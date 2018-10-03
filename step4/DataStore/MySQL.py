@@ -1,18 +1,18 @@
 import mysql.connector
 
-class MySQL:    
-    def __init__(self):
-        self.dns = None
-        self.dbh = None
-    
-    def open(self, **dns):
+class MySQL:
+    def __init__(self, **dns):
         self.dns = dns
+        self.dbh = None
+
+    def _open(self):
         self.dbh = mysql.connector.connect(**self.dns)
-    
-    def close(self):
+
+    def _close(self):
         self.dbh.close()
 
     def query(self, stmt, *args, **kwargs):
+        self._open()
         if kwargs.get('prepared', False):
             cursor = self.dbh.cursor(prepared=True)
             cursor.execute(stmt, args)
@@ -21,4 +21,5 @@ class MySQL:
             cursor.execute(stmt)
         data = cursor.fetchall()
         cursor.close()
+        self._close()
         return data
