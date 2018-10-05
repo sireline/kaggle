@@ -1,0 +1,11 @@
+{% block header %}
+<header>
+  <ul class="breadcrumb">
+    {% for item in props.breadcrumb %}
+    <li class="breadcrumb-item">
+      <a href="{{item.href}}">{{item.caption}}</a>
+    </li>
+    {% endfor %}
+  </ul>
+</header>
+{% endblock %}

@@ -17,19 +17,44 @@ app = Flask(__name__)
 
 @app.route('/')
 def main():
-    props = {'title': 'Step-by-Step Flask - index', 'msg': 'Welcom to Index Page.'}
+    props = {
+        'title': 'Step-by-Step Flask - index',
+        'breadcrumb': [
+            {'href': '/', 'caption': 'Home'}
+        ],
+        'msg': 'Welcom to Index Page.',
+        'table_contents': [
+            {'href': '/users', 'caption': 'Users List'},
+            {'href': '/hello', 'caption': 'About me'}
+        ]
+    }
     html = render_template('index.html', props=props)
     return html
 
 @app.route('/hello')
 def hello():
-    props = {'title': 'Step-by-Step Flask - hello', 'msg': 'Hello World.'}
+    print(request.path)
+    props = {
+        'title': 'Step-by-Step Flask - hello',
+        'breadcrumb': [
+            {'href': '/', 'caption': 'Home'},
+            {'href': '/hello', 'caption': 'About me'}
+        ],
+        'msg': 'Hello World.'
+    }
     html = render_template('hello.html', props=props)
     return html
 
 @app.route('/users', methods=['GET'])
 def users():
-    props = {'title': 'Users List', 'msg': 'Users List'}
+    props = {
+        'title': 'Users List',
+        'breadcrumb': [
+            {'href': '/', 'caption': 'Home'},
+            {'href': '/users', 'caption': 'Users List'}
+        ],
+        'msg': 'Users List'
+    }
     stmt = 'SELECT * FROM users'
     users = db.query(stmt)
     html = render_template('users.html', props=props, users=users)
@@ -37,7 +62,15 @@ def users():
 
 @app.route('/users/<int:id>', methods=['GET','PUT','DELETE'])
 def user(id):
-    props = {'title': 'User Information', 'msg': 'User Information'}
+    props = {
+        'title': 'User Information',
+        'breadcrumb': [
+            {'href': '/', 'caption': 'Home'},
+            {'href': '/users', 'caption': 'Users List'},
+            {'href': '/users/'+str(id), 'caption': 'User Information'}
+        ],
+        'msg': 'User Information'
+    }
     if request.method == 'DELETE':
         stmt = 'DELETE FROM users WHERE id = ?'
     elif request.method == 'PUT':
