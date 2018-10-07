@@ -45,6 +45,7 @@ def hello():
     html = render_template('hello.html', props=props)
     return html
 
+@app.route('/users/', methods=['POST'])
 @app.route('/users', methods=['GET'])
 def users():
     props = {
@@ -53,10 +54,24 @@ def users():
             {'href': '/', 'caption': 'Home'},
             {'href': '/users', 'caption': 'Users List'}
         ],
+        'page_nums': [10, 50, 100],
         'msg': 'Users List'
     }
+
+    if request.method == 'POST':
+        user_data = []
+#        user_data.append('5')
+        user_data.append(request.form['last_name'] + " " + request.form['first_name'])
+        user_data.append(request.form['age'])
+        user_data.append(request.form['gender'])
+        print(user_data)
+#        stmt = 'INSERT INTO users (id, name, age, gender) VALUES (?, ?, ? ,?)'
+        stmt = 'INSERT INTO users (name, age, gender) VALUES (?, ? ,?)'
+        result = db.insert(stmt, *tuple(user_data), prepared=True)
+        print(result)
     stmt = 'SELECT * FROM users'
-    users = db.query(stmt)
+    users = db.select(stmt)
+    print(users)
     html = render_template('users.html', props=props, users=users)
     return html
 
@@ -73,11 +88,21 @@ def user(id):
     }
     if request.method == 'DELETE':
         stmt = 'DELETE FROM users WHERE id = ?'
+        result = db.delete(stmt, id, prepared=True)
+        print(result)
     elif request.method == 'PUT':
-        stmt = 'UPDATE users SET name=?, age=?, sex=? WHERE id = ?'
-    else:
-        stmt = 'SELECT * FROM users WHERE id = ?'
-    user = db.query(stmt, id, prepared=True)
+        user_data = []
+        user_data.append('id')
+        user_data.append(request.form['last_name'] + " " + request.form['first_name'])
+        user_data.append(request.form['age'])
+        user_data.append(request.form['gender'])
+        print(user_data)
+        stmt = 'UPDATE users SET name=?, age=?, gender=? WHERE id = ?'
+        result = db.update(stmt, *user_data, prepared=True)
+        print(result)
+    stmt = 'SELECT * FROM users WHERE id = ?'
+    user = db.select(stmt, id, prepared=True)
+    print(user)
     html = render_template('user.html', props=props,user=user[0])
     return html
 
