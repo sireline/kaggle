@@ -25,15 +25,19 @@ class MySQL:
         return "Data inserted."
 
     def select(self, stmt, *args, **kwargs):
-        print(type(args))
         self._open()
         if kwargs.get('prepared', False):
-            cursor = self.dbh.cursor(named=True, prepared=True)
+            cursor = self.dbh.cursor(prepared=True)
             cursor.execute(stmt, args)
         else:
-            cursor = self.dbh.cursor(dictionary=True)
+            cursor = self.dbh.cursor()
             cursor.execute(stmt)
-        data = cursor.fetchall()
+        keys = cursor.column_names
+        rows = cursor.fetchall()
+        data = []
+        for row in rows:
+            data.append(dict(zip(keys, row)))
+        print(data)
         cursor.close()
         self._close()
         return data
