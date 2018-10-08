@@ -33,7 +33,6 @@ def main():
 
 @app.route('/hello')
 def hello():
-    print(request.path)
     props = {
         'title': 'Step-by-Step Flask - hello',
         'breadcrumb': [
@@ -60,18 +59,13 @@ def users():
 
     if request.method == 'POST':
         user_data = []
-#        user_data.append('5')
         user_data.append(request.form['last_name'] + " " + request.form['first_name'])
         user_data.append(request.form['age'])
         user_data.append(request.form['gender'])
-        print(user_data)
-#        stmt = 'INSERT INTO users (id, name, age, gender) VALUES (?, ?, ? ,?)'
         stmt = 'INSERT INTO users (name, age, gender) VALUES (?, ? ,?)'
         result = db.insert(stmt, *tuple(user_data), prepared=True)
-        print(result)
     stmt = 'SELECT * FROM users'
     users = db.select(stmt)
-    print(users)
     html = render_template('users.html', props=props, users=users)
     return html
 
@@ -89,20 +83,16 @@ def user(id):
     if request.method == 'DELETE':
         stmt = 'DELETE FROM users WHERE id = ?'
         result = db.delete(stmt, id, prepared=True)
-        print(result)
     elif request.method == 'PUT':
         user_data = []
         user_data.append('id')
         user_data.append(request.form['last_name'] + " " + request.form['first_name'])
         user_data.append(request.form['age'])
         user_data.append(request.form['gender'])
-        print(user_data)
         stmt = 'UPDATE users SET name=?, age=?, gender=? WHERE id = ?'
         result = db.update(stmt, *user_data, prepared=True)
-        print(result)
     stmt = 'SELECT * FROM users WHERE id = ?'
     user = db.select(stmt, id, prepared=True)
-    print(user)
     html = render_template('user.html', props=props,user=user[0])
     return html
 

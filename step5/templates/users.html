@@ -50,7 +50,7 @@
     <a href="#close" class="modal-overlay" aria-label="Close"></a>
     <div class="modal-container">
         <div class="modal-header">
-            <button class="btn btn-clear float-right" onclick="modal_close()">X</button>
+            <button class="btn btn-clear float-right" onclick="modal_close()"></button>
         <div class="modal-title h5">Modal title</div>
     </div>
     <div class="modal-body">
@@ -63,13 +63,13 @@
                 <input type="number" name="age" class="form-input" min="0" max="127">
                 <div class="form-group">
                     <label class="form-radio form-inline">
-                        <input type="radio" name="gender" checked value="未選択"><i class="form-icon"></i> 未選択
+                        <input type="radio" name="gender" checked="checked" value="未選択"><i class="form-icon"></i> 未選択
                     </label>
                     <label class="form-radio form-inline">
-                        <input type="radio" name="gender" value="女性"><i class="form-icon"></i> 女性
+                        <input type="radio" name="gender" checked="" value="女性"><i class="form-icon"></i> 女性
                     </label>
                     <label class="form-radio form-inline">
-                        <input type="radio" name="gender" checked value="男性"><i class="form-icon"></i> 男性
+                        <input type="radio" name="gender" checked="" value="男性"><i class="form-icon"></i> 男性
                     </label>
                     </div>
                 <button type="submit" id="add" class="btn">登録</button>

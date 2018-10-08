@@ -1,19 +1,22 @@
 body{
     margin-left: 35px;
     margin-right: 35px;
+    background-color: rgb(241, 241, 241);
 }
 
 header{
     margin-top: 10px;
-    background-color: rgb(203, 206, 209);
+    background-color: rgb(231, 231, 231);
 }
 
 #contents{
     margin-left: 25px;
     margin-right: 25px;
     min-height: calc(90vh - 50px);
+    background-color: rgb(241, 241, 241);
 }
 
 footer{
     height: 50px;
+    background-color: rgb(231, 231, 231);
 }
