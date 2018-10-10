@@ -5,6 +5,7 @@ from flask import render_template
 from flask import request
 
 from DataStore.MySQL import MySQL
+
 dns = {
     'user': 'mysql',
     'host': 'localhost',
@@ -12,7 +13,6 @@ dns = {
     'database': 'kaggle'
 }
 db = MySQL(**dns)
-
 app = Flask(__name__)
 
 @app.route('/')
@@ -44,8 +44,7 @@ def hello():
     html = render_template('hello.html', props=props)
     return html
 
-@app.route('/users/', methods=['POST'])
-@app.route('/users', methods=['GET'])
+@app.route('/users', methods=['GET', 'POST'])
 def users():
     props = {
         'title': 'Users List',
@@ -53,7 +52,8 @@ def users():
             {'href': '/', 'caption': 'Home'},
             {'href': '/users', 'caption': 'Users List'}
         ],
-        'page_nums': [10, 50, 100],
+        'pages': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        'row_nums': [10, 50, 100],
         'msg': 'Users List'
     }
 

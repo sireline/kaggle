@@ -28,22 +28,35 @@
 <div id="page">
     <ul class="pagination">
         <li class="page-item disabled">
-            <a href="#" tabindex="-1">Previous</a>
+            <a onclick=previous()>Previous</a>
         </li>
+        {% for page in props.pages %}
+        {% if loop.first %}
         <li class="page-item active">
-            <a href="#">1</a>
-        </li>
+        {% else %}
         <li class="page-item">
-            <a href="#">Next</a>
+        {% endif %}
+            <a href="#" onclick=page_move({{page}})>{{page}}</a>
         </li>
-        <li>
-            <select name="page_num">
-                {% for num in props.page_nums %}
-                <option value="{{num}}">{{num}}</option>
-                {% endfor %}
-            </select>
+        {% endfor %}
+        <li class="page-item">
+            <a href="#" onclick=next()>Next</a>
         </li>
     </ul>
+        <!--
+        <div class="btn-group btn-group-block">
+            <button id="previous" class="btn" onclick="previous()"><li class="page-item">Previous</li></button>
+            {% for page in props.pages %}
+            <button id="page_{{page}}" class="btn" onclick="page_move({{page}})"><li class="page-item">{{page}}</li></button>
+            {% endfor %}
+            <button id="next" class="btn" onclick="next()"><li class="page-item">Next</li></button>
+        </div>
+    -->
+    <select name="row_num">
+        {% for row_num in props.row_nums %}
+        <option value="{{row_num}}">{{row_num}}</option>
+        {% endfor %}
+    </select>
 </div>
 
 <div class="modal" id="add_user_modal">
@@ -55,7 +68,7 @@
     </div>
     <div class="modal-body">
         <div class="content">
-            <form class="form-horizontal" method="POST" action="/users/">
+            <form class="form-horizontal" method="POST" action="/users">
                 <label class="form-label" for="name">名前</label>
                 <input type="text" name="last_name" class="form-input" size="127" placeholder="姓">
                 <input type="text" name="first_name" class="form-input" size="127" placeholder="名">
@@ -96,6 +109,15 @@
     var modal_close = function() {
         var modal = document.getElementById('add_user_modal');
         modal.classList.remove('active');
+    };
+    var previous = function() {
+        alert("Previous");
+    };
+    var page_move = function(no) {
+        alert("Page_"+no);
+    };
+    var next = function() {
+        alert("Next");
     };
 </script>
 {% endblock %}
