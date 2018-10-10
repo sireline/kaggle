@@ -43,15 +43,6 @@
             <a href="#" onclick=next()>Next</a>
         </li>
     </ul>
-        <!--
-        <div class="btn-group btn-group-block">
-            <button id="previous" class="btn" onclick="previous()"><li class="page-item">Previous</li></button>
-            {% for page in props.pages %}
-            <button id="page_{{page}}" class="btn" onclick="page_move({{page}})"><li class="page-item">{{page}}</li></button>
-            {% endfor %}
-            <button id="next" class="btn" onclick="next()"><li class="page-item">Next</li></button>
-        </div>
-    -->
     <select name="row_num">
         {% for row_num in props.row_nums %}
         <option value="{{row_num}}">{{row_num}}</option>
