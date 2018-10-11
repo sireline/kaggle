@@ -46,17 +46,6 @@ def hello():
 
 @app.route('/users', methods=['GET', 'POST'])
 def users():
-    props = {
-        'title': 'Users List',
-        'breadcrumb': [
-            {'href': '/', 'caption': 'Home'},
-            {'href': '/users', 'caption': 'Users List'}
-        ],
-        'pages': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-        'row_nums': [10, 50, 100],
-        'msg': 'Users List'
-    }
-
     if request.method == 'POST':
         user_data = []
         user_data.append(request.form['last_name'] + " " + request.form['first_name'])
@@ -66,6 +55,31 @@ def users():
         result = db.insert(stmt, *tuple(user_data), prepared=True)
     stmt = 'SELECT * FROM users'
     users = db.select(stmt)
+
+    def _page_range():
+        p = round(len(users)/10)
+        if p <= 1:
+            return (1,)
+        elif p <= 10:
+            return range(1, p+1)
+        else:
+            return range(1, 11)
+
+    props = {
+        'title': 'Users List',
+        'breadcrumb': [
+            {'href': '/', 'caption': 'Home'},
+            {'href': '/users', 'caption': 'Users List'}
+        ],
+        'pages': {
+            'page_range': _page_range(),
+            'page_size': 10,
+            'prev': 'disabled',
+            'next': 'disabled',
+            'view_rows': [10, 25, 50]
+        },
+        'msg': 'Users List'
+    }
     html = render_template('users.html', props=props, users=users)
     return html
 
@@ -83,6 +97,7 @@ def user(id):
     if request.method == 'DELETE':
         stmt = 'DELETE FROM users WHERE id = ?'
         result = db.delete(stmt, id, prepared=True)
+        redirect(url_for('users'))
     elif request.method == 'PUT':
         user_data = []
         user_data.append('id')

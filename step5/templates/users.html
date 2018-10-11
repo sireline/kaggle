@@ -25,66 +25,11 @@
     <button id="add_user" class="btn" onclick="register()">新規登録</button>
 </div>
 <hr>
-<div id="page">
-    <ul class="pagination">
-        <li class="page-item disabled">
-            <a onclick=previous()>Previous</a>
-        </li>
-        {% for page in props.pages %}
-        {% if loop.first %}
-        <li class="page-item active">
-        {% else %}
-        <li class="page-item">
-        {% endif %}
-            <a href="#" onclick=page_move({{page}})>{{page}}</a>
-        </li>
-        {% endfor %}
-        <li class="page-item">
-            <a href="#" onclick=next()>Next</a>
-        </li>
-    </ul>
-    <select name="row_num">
-        {% for row_num in props.row_nums %}
-        <option value="{{row_num}}">{{row_num}}</option>
-        {% endfor %}
-    </select>
-</div>
+{% include "pagenavi.html" %}
+{% block pagenavi %}{% endblock %}
 
-<div class="modal" id="add_user_modal">
-    <a href="#close" class="modal-overlay" aria-label="Close"></a>
-    <div class="modal-container">
-        <div class="modal-header">
-            <button class="btn btn-clear float-right" onclick="modal_close()"></button>
-        <div class="modal-title h5">Modal title</div>
-    </div>
-    <div class="modal-body">
-        <div class="content">
-            <form class="form-horizontal" method="POST" action="/users">
-                <label class="form-label" for="name">名前</label>
-                <input type="text" name="last_name" class="form-input" size="127" placeholder="姓">
-                <input type="text" name="first_name" class="form-input" size="127" placeholder="名">
-                <label class="form-label" for="age">年齢</label>
-                <input type="number" name="age" class="form-input" min="0" max="127">
-                <div class="form-group">
-                    <label class="form-radio form-inline">
-                        <input type="radio" name="gender" checked="checked" value="未選択"><i class="form-icon"></i> 未選択
-                    </label>
-                    <label class="form-radio form-inline">
-                        <input type="radio" name="gender" checked="" value="女性"><i class="form-icon"></i> 女性
-                    </label>
-                    <label class="form-radio form-inline">
-                        <input type="radio" name="gender" checked="" value="男性"><i class="form-icon"></i> 男性
-                    </label>
-                    </div>
-                <button type="submit" id="add" class="btn">登録</button>
-            </form>
-        </div>
-    </div>
-    <div class="modal-footer">
-        ...
-    </div>
-</div>
-
+{% include "user_modal.html" %}
+{% block user_modal %}{% endblock %}
 <style>
     #register{
         margin-top: 10px;
@@ -105,6 +50,7 @@
         alert("Previous");
     };
     var page_move = function(no) {
+        var current_page = no;
         alert("Page_"+no);
     };
     var next = function() {

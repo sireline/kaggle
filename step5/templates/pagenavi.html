@@ -1,0 +1,22 @@
+{% block pagenavi %}
+<div id="pagenavi">
+    <select name="row_num" class="col-1 float-right">
+        {% for row_num in props.pages.view_rows %}
+        <option value="{{row_num}}">{{row_num}}</option>
+        {% endfor %}
+    </select>
+    <ul class="pagination col-7">
+        <li class="page-item {{props.pages.prev}}">
+            <a onclick=previous()>Previous</a>
+        </li>
+        {% for page in props.pages.page_range %}
+        <li class="page-item">
+            <a href="#" onclick=page_move({{page}})>{{page}}</a>
+        </li>
+        {% endfor %}
+        <li class="page-item {{props.pages.next}}">
+            <a href="#" onclick=next()>Next</a>
+        </li>
+    </ul>
+</div>
+{% endblock %}

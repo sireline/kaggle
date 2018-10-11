@@ -22,7 +22,15 @@
         </div>
     </div>
     <div class="card-body">
-    <form class="form-horizontal">
+    <form id="user_info_form" class="form-horizontal">
+        <div class="form-group">
+            <div class="col-1 col-sm-4">
+                <label class="form-label" for="id">ID</label>
+            </div>
+            <div class="col-3 col-sm-4">
+                <input type="text" name="id" class="form-input" value="{{user.id}}" disabled>
+            </div>
+        </div>
         <fieldset disabled>
         <div class="form-group">
             <div class="col-1 col-sm-4">
@@ -48,21 +56,21 @@
             <div class="col-3 col-sm-4">
                 <label class="form-radio form-inline">
                 {% if user.gender == '未選択' %}
-                <input type="radio" name="gender" checked="checked" value="未選択"><i class="form-icon"></i> 未選択
+                <input type="radio" name="gender" checked value="未選択"><i class="form-icon"></i> 未選択
                 {% else %}
                 <input type="radio" name="gender" value="未選択"><i class="form-icon"></i> 未選択
                 {% endif %}
                 </label>
                 <label class="form-radio form-inline">
                 {% if user.gender == '女姓' %}
-                <input type="radio" name="gender" checked="checked" value="女性"><i class="form-icon"></i> 女性
+                <input type="radio" name="gender" checked value="女性"><i class="form-icon"></i> 女性
                 {% else %}
                 <input type="radio" name="gender" value="女性"><i class="form-icon"></i> 女性
                 {% endif %}
                 </label>
                 <label class="form-radio form-inline">
                 {% if user.gender == '男姓' %}
-                <input type="radio" name="gender" checked="checked" value="男性"><i class="form-icon"></i> 男性
+                <input type="radio" name="gender" checked value="男性"><i class="form-icon"></i> 男性
                 {% else %}
                 <input type="radio" name="gender" value="男性"><i class="form-icon"></i> 男性
                 {% endif %}
