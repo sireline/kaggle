@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block contents %}
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            {% for key in users[0].keys() %}
+            {% if loop.index <= 2 %}
+            <th>{{key}}</th>
+            {% endif %}
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>
+                <a href="./users/{{user.id}}">{{user.id}}</a>
+            </td>
+            <td>{{user.name}}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div id="register">
+    <button id="add_user" class="btn" onclick="register()">新規登録</button>
+</div>
+<hr>
+{% include "pagenavi.html" %}
+{% block pagenavi %}{% endblock %}
+
+{% include "user_modal.html" %}
+{% block user_modal %}{% endblock %}
+<style>
+    #register{
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<script>
+    var register = function() {
+        var modal = document.getElementById('add_user_modal');
+        modal.classList.add('active');
+    };
+    var modal_close = function() {
+        var modal = document.getElementById('add_user_modal');
+        modal.classList.remove('active');
+    };
+    var previous = function() {
+        alert("Previous");
+    };
+    var page_move = function(no) {
+        var current_page = no;
+        alert("Page_"+no);
+    };
+    var next = function() {
+        alert("Next");
+    };
+</script>
+{% endblock %}

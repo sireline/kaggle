@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block contents %}
+    <ul>
+        {% for item in props.table_contents %}
+        <li>
+            <a href="{{item.href}}">{{item.caption}}</a>
+        </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
