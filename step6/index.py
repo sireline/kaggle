@@ -9,7 +9,7 @@ from DataStore.MySQL import MySQL
 dns = {
     'user': 'mysql',
     'host': 'localhost',
-    'password': 'NewPassword',
+    'password': '',
     'database': 'kaggle'
 }
 db = MySQL(**dns)

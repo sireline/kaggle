@@ -6,7 +6,7 @@ class MySQL:
         self.dbh = None
 
     def _open(self):
-        self.dbh = mysql.connector.connect(**self.dns)
+        self.dbh = mysql.connector.MySQLConnection(**self.dns)
 
     def _close(self):
         self.dbh.close()

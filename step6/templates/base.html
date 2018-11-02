@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        {% include "css.html" %}
+        {% block css %}{% endblock %}
+        <title>{{props.title}}</title>
+    </head>
+    <body>
+        {% include "header.html" %}
+        {% block header %}{% endblock %}
+        <div id="contents">
+            <p>{{props.msg}}</p>
+            {% block contents %}{% endblock %}
+        </div>
+        {% include "footer.html" %}
+        {% block footer %}{% endblock %}
+    </body>
+</html>
